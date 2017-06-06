@@ -1,0 +1,32 @@
+{
+  "extends": "airbnb-base",
+  "eslintConfig": {
+    "env": {
+      "node": true
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "global-require": 0,
+    "new-cap": 0,
+    "max-len": 0,
+    "no-plusplus": 0,
+    "no-shadow": 0,
+    "no-useless-escape": 0,
+    "import/no-absolute-path": 0,
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "func-names": 0,
+    "no-lonely-if": 0,
+    "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
+    "camelcase": 0,
+    "prefer-const": 0,
+    "require-yield": 0,
+    "comma-dangle": 0,
+    "import/newline-after-import": 0,
+    "no-restricted-syntax": 0
+  }
+}
