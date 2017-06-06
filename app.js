@@ -29,8 +29,8 @@ app.use(Middleware.errorHandling.handle);
 app.use(bodyParser());
 
 const apiV1 = new Router();
-apiV1.get('/route', Controller.api.v1.route.get);
-router.use('/v1', setVersion(LogEnum.VERSION.VERSION_ONE), apiV1.routes(), apiV1.allowedMethods());
+apiV1.get('/route/:token', Controller.api.v1.route.get);
+router.use('/api/v1', setVersion(LogEnum.VERSION.VERSION_ONE), apiV1.routes(), apiV1.allowedMethods());
 
 // app.use(async (ctx) => {
 //   ctx.body = 'Invalid URL!!!';
