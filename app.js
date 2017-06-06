@@ -1,4 +1,7 @@
 console.log('server starts');
+require('dotenv').config();
+console.log('setting env variables');
+
 const Koa = require('koa');
 const Router = require('koa-router');
 const router = new Router();
