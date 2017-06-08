@@ -5,17 +5,19 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "test": "mocha test/unit/** && ./node_modules/.bin/eslint ./ --ext js --quiet"
+    "test": "mocha test/unit/** -g 'presist valid data and set token' && ./node_modules/.bin/eslint ./ --ext js --quiet"
   },
   "author": "wingleungchoi",
   "license": "MIT",
   "dependencies": {
     "@google/maps": "^0.3.1",
+    "co-mocha": "^1.2.0",
     "dotenv": "^4.0.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.0",
     "lodash": "^4.17.4",
+    "mongodb": "^2.2.28",
     "q": "^1.5.0",
     "require-dir": "^0.3.2",
     "uuid": "^3.0.1"

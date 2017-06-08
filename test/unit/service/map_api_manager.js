@@ -1,7 +1,6 @@
-// for eslint
-/* global describe it */
-// loading environment
-require('../../../app');
+/* global describe it */ // for eslint
+
+require('../../config'); // loading environment
 const expect = require('chai').expect;
 const _ = require('lodash/fp');
 const MapApiManager = require('../../../service/map_api_manager');
@@ -14,7 +13,7 @@ function expectOK(response) {
 
 describe('Testing MapApiManager Service', () => {
   describe('Testing getThirdPartyAPIresult method', () => {
-    it('#1 Should check required fields and output error', (done) => {
+    it('#1 Should return success responses when inputs are valid', (done) => {
       // let expectedResult = {
       //   destination_addresses:
       //   [
@@ -70,7 +69,7 @@ describe('Testing MapApiManager Service', () => {
       .then(done)
       .catch(done);
     });
-    it('#2 Should return error when inputs are invalid', (done) => {
+    it('#2 Should return failed responsed when inputs are invalid', (done) => {
       // let expectedResult = {
       //   destination_addresses: ['2,2', '2,4'],
       //   origin_addresses: ['1,1'],
@@ -99,6 +98,12 @@ describe('Testing MapApiManager Service', () => {
       })
       .then(done)
       .catch(done);
+    });
+  });
+
+  describe('Testing presistRouteOfToToken', () => {
+    it('return a function to presist route data of token input', () => {
+
     });
   });
 });

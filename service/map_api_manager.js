@@ -6,11 +6,12 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 class MapApiManager {
-  static getDirections(locations) {
-    this.getThirdPartyAPIresult(locations)
+  static getDirections(token) {
+    // get locations from database by token
+    MapApiManager.getThirdPartyAPIresult(locations)
     .asPromise();
     // .then(checkResult) // TODO
-    // .then(presistRoute);
+    // .then(presistRoute)
     // .catch() // TODO
   }
 
@@ -27,9 +28,11 @@ class MapApiManager {
     return result;
   }
 
-  // static presistRoute(response) {
-  //
-  // }
+  static presistRouteOfToToken(token) {
+    return (response) => {
+
+    }
+  }
 }
 
 module.exports = MapApiManager;
