@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "test": "mocha test/unit/** -g 'presist valid data and set token' && ./node_modules/.bin/eslint ./ --ext js --quiet"
+    "test": "mocha test/unit/** && ./node_modules/.bin/eslint ./ --ext js --quiet"
   },
   "author": "wingleungchoi",
   "license": "MIT",

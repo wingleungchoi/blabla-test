@@ -8,6 +8,7 @@ const RouteSchema = {
   type: 'object',
   properties: {
     _id: { type: 'object' },
+    inputLocations: { type: 'array' },
     token: { type: 'string', required: true, defaultValue: uuidV4 },
     createdAt: { type: 'date', defaultValue: 'now' },
     updatedAt: { type: 'date', defaultValue: 'now' }
