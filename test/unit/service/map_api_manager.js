@@ -44,6 +44,29 @@ describe('Testing MapApiManager Service', () => {
     });
   });
 
+  describe('Testing convertAddressesToLatLong', () => {
+    it('should return a matched address when the address is found', () => {
+      const address = '11 Hoi Shing Rd, Tsuen Wan, Hong Kong';
+      const addressesWithLatLong = {
+        '11 Hoi Shing Rd, Tsuen Wan, Hong Kong': ['22.372081', '114.107877'],
+        '802 Nathan Rd, Mong Kok, Hong Kong': ['22.326442', '114.167811'],
+        'Hong Kong': ['22.284419', '114.159510']
+      };
+      const actualResult = MapApiManager.convertAddressesToLatLong(address, addressesWithLatLong);
+      expect(actualResult).to.deep.equal(['22.372081', '114.107877']);
+    });
+    it('should return undefined when the address is NOT found', () => {
+      const address = 'Secret Place, Hong Kong';
+      const addressesWithLatLong = {
+        '11 Hoi Shing Rd, Tsuen Wan, Hong Kong': ['22.372081', '114.107877'],
+        '802 Nathan Rd, Mong Kok, Hong Kong': ['22.326442', '114.167811'],
+        'Hong Kong': ['22.284419', '114.159510']
+      };
+      const actualResult = MapApiManager.convertAddressesToLatLong(address, addressesWithLatLong);
+      expect(actualResult).to.deep.equal(undefined);
+    });
+  });
+
   describe('Testing getformattedAddressesWithLatLong', () => {
     it('should return an object with formatted_address as key and latLong as value', async () => {
       const actualResult = await MapApiManager.getformattedAddressesWithLatLong([
@@ -115,8 +138,8 @@ describe('Testing MapApiManager Service', () => {
            ['22.326442', '114.167811'],
            ['22.284419', '114.159510']
         ],
-        total_distance: 20000,
-        total_time: 1800
+        total_distance: 25185,
+        total_time: 1819
       };
       const actualResult = MapApiManager.convertData(googleResponse);
       expect(actualResult).to.equal(expectedResult);

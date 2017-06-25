@@ -13,6 +13,11 @@ class MapApiManager {
     return response;
   }
 
+  static convertAddressesToLatLong(address, addressesWithLatLong) {
+    const latLong = _.get(`${address}`, addressesWithLatLong);
+    return latLong;
+  }
+
   static async getThirdPartyAPIresult(locations) {
     let locationsWithLatKeys = _.map(location => ({
       lat: location[0],
