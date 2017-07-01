@@ -134,15 +134,48 @@ describe('Testing MapApiManager Service', () => {
       const expectedResult = {
         status: 'success',
         path: [
-           ['22.372081', '114.107877'],
-           ['22.326442', '114.167811'],
-           ['22.284419', '114.159510']
+          '11 Hoi Shing Rd, Tsuen Wan, Hong Kong',
+          'Laguna City, Central, Hong Kong',
+          '789 Nathan Rd, Mong Kok, Hong Kong'
         ],
         total_distance: 25185,
         total_time: 1819
       };
       const actualResult = MapApiManager.convertData(googleResponse);
-      expect(actualResult).to.equal(expectedResult);
+      expect(actualResult).to.deep.equal(expectedResult);
+    });
+  });
+
+  describe('Testing getDirections', () => {
+    it('returns the fastest route in the expected structure', async () => {
+      const actualResult = await MapApiManager.getDirections([
+        ['22.372081', '114.107877'],
+        ['22.326442', '114.167811'],
+        ['22.284419', '114.159510']
+      ]);
+      const expectedResult = {
+        status: 'success',
+        path: [
+          ['22.372081', '114.107877'],
+          ['22.326442', '114.167811'],
+          ['22.284419', '114.159510']
+        ],
+        total_distance: 25185,
+        total_time: 1819
+      };
+      expect(actualResult).to.deep.equal(expectedResult);
+    });
+
+    it('returns null when no routes are found', async () => {
+      const actualResult = await MapApiManager.getDirections([
+        ['1', '1'],
+        ['2', '1'],
+        ['3', '3']
+      ]);
+      const expectedResult = {
+        error: 'No routes is found in google API'
+      };
+      expect(actualResult).to.deep.equal(expectedResult);
     });
   });
 });

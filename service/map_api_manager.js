@@ -6,10 +6,19 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 class MapApiManager {
-  static async getDirections(token, routeService) {
-    // get locations from database by token
-    const route = await routeService.find({ token });
-    const response = MapApiManager.getThirdPartyAPIresult(route.inputLocations);
+  static async getDirections(route) {
+    const googleResponse = await MapApiManager.getThirdPartyAPIresult(route);
+    if (_.get('rows.0.elements.0.status', googleResponse.json) === 'ZERO_RESULTS') {
+      // no routes is found in google API
+      return { error: 'No routes is found in google API' };
+    }
+
+    const response = this.convertData(googleResponse.json);
+    const oldLatLongs = route;
+    const formattedAddressesWithLatLong = await MapApiManager.getformattedAddressesWithLatLong(oldLatLongs);
+    // const pathInTermOfLatLong = _.map(formattedAddress => _.get(formattedAddress, formattedAddressesWithLatLong), response.path);
+    const pathInTermOfLatLong = _.map(latLong => this.findTheClosestPosition(oldLatLongs, latLong), _.values(formattedAddressesWithLatLong));
+    response.path = pathInTermOfLatLong;
     return response;
   }
 
@@ -25,6 +34,7 @@ class MapApiManager {
     }), locations);
     let result = await googleMapsClient.distanceMatrix({
       mode: 'driving',
+      transit_routing_preference: 'fewer_transfers',
       origins: _.take(1, locationsWithLatKeys),
       destinations: _.takeRight((locationsWithLatKeys.length - 1), locationsWithLatKeys)
     }).asPromise();
@@ -78,6 +88,38 @@ class MapApiManager {
       total_distance,
       total_time
     };
+  }
+
+  static findTheClosestPosition(arrayOfLatLongs, latLong) {
+    const arrayOfDistances = _.map(lt => this.calcCrow(lt, latLong), arrayOfLatLongs);
+// console.log(arrayOfLatLongs);
+// console.log(latLong);
+// console.log('arrayOfDistances', arrayOfDistances);
+    return _.pipe([
+      _.min,
+      value => _.indexOf(value, arrayOfDistances),
+      index => _.get(`${index}`, arrayOfLatLongs)
+    ])(arrayOfDistances);
+  }
+
+  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates-shows-wrong
+  // This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+  static calcCrow([latA, lonA], [latB, lonB]) {
+    const R = 6371; // km
+    const dLat = this.toRad(latB - latA);
+    const dLon = this.toRad(lonB - lonA);
+    let lat1 = this.toRad(latA);
+    let lat2 = this.toRad(lonB);
+
+    const a = (Math.sin(dLat / 2) * Math.sin(dLat / 2)) + (Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2));
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c;
+    return d;
+  }
+
+  // Converts numeric degrees to radians
+  static toRad(Value) {
+    return (Value * Math.PI) / 180;
   }
 }
 
