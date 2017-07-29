@@ -3,7 +3,7 @@
 require('../../config'); // loading environment
 const expect = require('chai').expect;
 const _ = require('lodash/fp');
-const MapApiManager = require('../../../service/map_api_manager');
+const MapApiManager = require('../../../lib/map_api_manager');
 
 function expectOK(response) {
   expect(response.status).to.equal(200);
