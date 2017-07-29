@@ -4,19 +4,20 @@ const AbstractService = require('./abstract');
 class RouteService extends AbstractService {
   constructor(app) {
     super(app);
-    this.collection = this.db.collection('Routes');
+    this.collection = app.context.db.collection('Routes');
   }
 
-  * create(object) {
+  async create(object) {
     const route = Route.build(object);
-    yield this.insert(route);
+    await this.insert(route);
     return route;
   }
 
-  * save(route) {
+  async save(route) {
     const newRoute = Route.build(route, { setDefault: false });
     newRoute.updatedAt = new Date();
-    return yield this.updateById(newRoute._id, newRoute);
+    const result = await this.updateById(newRoute._id, newRoute);
+    return result;
   }
 }
 

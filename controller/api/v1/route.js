@@ -1,9 +1,16 @@
 const Response = require('../../../lib/response');
+const RoutesManager = require('../../../model/routes_manager');
 
 class RouteController {
   static async get(ctx) {
-    console.log('route controller get');
-    return Response.ok(ctx, { company: 'helloworld' });
+    return Response.ok(ctx, {
+      status: 'in progress'
+    });
+  }
+
+  static async post(ctx) {
+    return Response.ok(ctx, {
+    });
   }
 }
 
