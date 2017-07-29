@@ -7,9 +7,10 @@ module.exports = {
   async handle(ctx, next) {
     ctx.state.request_id = uuid();
     try {
-      next();
+      await next();
     } catch (err) {
       let error = ErrorEnum.INTERNAL_ERROR;
+      console.log('INTERNAL_ERROR err', err);
       if (err instanceof AppError) {
         error = err;
       }

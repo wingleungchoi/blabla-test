@@ -4,7 +4,6 @@ class RoutesManager {
       inputLocations: inputRoute
     };
     let result = await services.route.create(route);
-console.log('wing result', result)
     return { token: result.token };
   }
 }

@@ -9,7 +9,14 @@ class RouteController {
   }
 
   static async post(ctx) {
+    console.log(ctx.request.body);
+    const inputRoute = ctx.request.body;
+    const actualResult = await RoutesManager.createNewRequest({
+      services: ctx.app.context.services,
+      inputRoute
+    });
     return Response.ok(ctx, {
+      token: actualResult.token
     });
   }
 }

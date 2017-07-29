@@ -19,7 +19,7 @@ const MongoClient = require('mongodb').MongoClient;
 function setVersion(version) {
   return async function (ctx, next) {
     ctx.state.version = version;
-    return next();
+    await next();
   };
 }
 
