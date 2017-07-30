@@ -4,6 +4,7 @@ require('../../config'); // loading environment
 const expect = require('chai').expect;
 const _ = require('lodash/fp');
 const MapApiManager = require('../../../lib/map_api_manager');
+const RouteStatus = require('../../../enum/route_status');
 
 function expectOK(response) {
   expect(response.status).to.equal(200);
@@ -132,7 +133,7 @@ describe('Testing MapApiManager Service', () => {
       };
 
       const expectedResult = {
-        status: 'success',
+        status: RouteStatus.success.value,
         path: [
           '11 Hoi Shing Rd, Tsuen Wan, Hong Kong',
           'Laguna City, Central, Hong Kong',
@@ -154,7 +155,7 @@ describe('Testing MapApiManager Service', () => {
         ['22.284419', '114.159510']
       ]);
       const expectedResult = {
-        status: 'success',
+        status: RouteStatus.success.value,
         path: [
           ['22.372081', '114.107877'],
           ['22.326442', '114.167811'],
