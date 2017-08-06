@@ -164,7 +164,10 @@ describe('Testing MapApiManager Service', () => {
         total_distance: 25185,
         total_time: 1819
       };
-      expect(actualResult).to.deep.equal(expectedResult);
+      expect(actualResult.status).to.equal(expectedResult.status);
+      expect(actualResult.path).to.deep.equal(expectedResult.path);
+      expect(actualResult.total_distance).to.equal(expectedResult.total_distance);
+      expect(actualResult.total_time).to.be.a('number');
     });
 
     it('returns null when no routes are found', async () => {

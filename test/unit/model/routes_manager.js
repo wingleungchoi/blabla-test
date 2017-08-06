@@ -3,7 +3,7 @@
 
 require('../../config'); // loading environment
 const expect = require('chai').expect;
-const ROUTE_STATUS = require('../../../enum/route_status')
+const ROUTE_STATUS = require('../../../enum/route_status');
 const MongoClient = require('mongodb').MongoClient;
 const MockKoa = require('../mock/koa');
 require('co-mocha'); // support generator test
