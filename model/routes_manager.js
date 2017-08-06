@@ -12,6 +12,7 @@ class RoutesManager {
   }
 
   static async findAndPersist({ services, routeId }) {
+    // idea this function shall be micro service
     const route = await services.route.findOne({ _id: routeId });
     const apiResult = await MapApiManager.getDirections(route.inputLocations);
     const result = await services.route.updateById(routeId, apiResult);
