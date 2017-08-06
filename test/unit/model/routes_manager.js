@@ -3,7 +3,7 @@
 
 require('../../config'); // loading environment
 const expect = require('chai').expect;
-require('../../config'); // loading environment
+const ROUTE_STATUS = require('../../../enum/route_status')
 const MongoClient = require('mongodb').MongoClient;
 const MockKoa = require('../mock/koa');
 require('co-mocha'); // support generator test
@@ -48,6 +48,27 @@ describe('Testing RoutesManager Service', () => {
       ).catch((err) => {
         console.error('err', err);
       });
+    });
+  });
+
+  describe('Testing findAndPersist', () => {
+    it('should find the route, call the map api manager and presist the result', async () => {
+      const route = {
+        inputLocations: [
+          ['22.372081', '114.107877'],
+          ['22.326442', '114.167811'],
+          ['22.284419', '114.159510']
+        ]
+      };
+      const insertResult = await services.route.create(route);
+      const confirmInsertresults = await services.route.find({ _id: insertResult._id });
+      const confirmInsertresult = confirmInsertresults[0];
+      expect(confirmInsertresult.inputLocations).to.deep.eql(route.inputLocations);
+      const updatedResult = await RoutesManager.findAndPersist({ services, routeId: confirmInsertresult._id });
+      expect(updatedResult.status).to.be.eql(ROUTE_STATUS.success.value);
+      expect(updatedResult.path).to.be.a('array');
+      expect(updatedResult.total_distance).to.be.a('number');
+      expect(updatedResult.total_time).to.be.a('number');
     });
   });
 });

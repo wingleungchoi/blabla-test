@@ -23,14 +23,17 @@ class AbstractService {
     const result = await operation.toArray();
     return result;
   }
+
   async findOne(query, opts = {}) {
     const result = await this.collection.findOne(query, opts);
     return result;
   }
+
   async findById(id, opts = {}) {
     const result = await this.findOne({ _id: id }, opts);
     return result;
   }
+
   async updateById(id, data) {
     const result = await this.collection.findOneAndUpdate(
       { _id: id },
