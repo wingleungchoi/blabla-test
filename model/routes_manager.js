@@ -7,8 +7,8 @@ class RoutesManager {
     const route = await services.route.findOne({ token: routeToken });
     return {
       path: route.path,
-    	total_distance: route.total_distance,
-    	total_time: route.total_time,
+      total_distance: route.total_distance,
+      total_time: route.total_time,
       status: _.find(s => s.value === route.status, _.values(RouteStatus)).name
     };
   }
