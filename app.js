@@ -26,7 +26,7 @@ app.use(bodyParser({ jsonLimit: '5mb' }));
 
 app.use(router.routes());
 
-MongoClient.connect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/lala-dev').then((db) => {
+MongoClient.connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/lala-dev').then((db) => {
   // set up database
   app.context.db = db;
   app.context.services = {};

@@ -1,0 +1,23 @@
+version: '2'
+services:
+    app:
+        image: node:8
+        volumes: # bind sources to /src
+          - ".:/src"
+        ports:
+            - "3000:3000" #open required ports here
+        depends_on:
+            - mongo
+        environment: # add required environment variables if need
+            - PORT=3000
+            - DATABASE_URL=mongodb://mongo/db
+        command: bash -c "sleep infinity"  # DON'T run app. Wait forever (Otherwise app's container will be stopped)
+
+    # Required services
+    mongo:
+        image: mongo:3.2
+        ports:
+            - "27017:27017" # Optional, to have ability to connect to mongo db from host OS
+        volumes:
+            - ./.database:/data # Add .database to .gitignore (now database files will be stored in .database)
+    # add other services if need
