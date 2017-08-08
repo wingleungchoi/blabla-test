@@ -4,24 +4,13 @@ console.log('setting env variables');
 
 const PORT = process.env.PORT || 3000;
 const Koa = require('koa');
-const Router = require('koa-router');
-const router = new Router();
+const router = require('./router');
 const requireDir = require('require-dir');
 const bodyParser = require('koa-bodyparser');
 const app = new Koa();
-const LogEnum = require('./enum/log');
-const Controller = requireDir('./controller', { camelcase: true, recurse: true });
 const Service = requireDir('./service', { camelcase: true });
 const Middleware = requireDir('./middleware', { camelcase: true });
 const MongoClient = require('mongodb').MongoClient;
-
-// mount the routes
-function setVersion(version) {
-  return async function (ctx, next) {
-    ctx.state.version = version;
-    await next();
-  };
-}
 
 // middleware
 app.use(async (ctx, next) => {
@@ -34,11 +23,6 @@ app.use(async (ctx, next) => {
 
 app.use(Middleware.errorHandling.handle);
 app.use(bodyParser({ jsonLimit: '5mb' }));
-
-const apiV1 = new Router();
-apiV1.get('/route/:token', Controller.api.v1.route.get);
-apiV1.post('/routes', Controller.api.v1.route.post);
-router.use('/api/v1', setVersion(LogEnum.VERSION.VERSION_ONE), apiV1.routes(), apiV1.allowedMethods());
 
 app.use(router.routes());
 
