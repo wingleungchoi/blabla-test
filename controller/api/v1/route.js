@@ -3,20 +3,26 @@ const RoutesManager = require('../../../model/routes_manager');
 
 class RouteController {
   static async get(ctx) {
-    return Response.ok(ctx, {
-      status: 'in progress'
+    const result = await RoutesManager.getRoute({
+      services: ctx.app.context.services,
+      routeToken: ctx.params.token
     });
+    return Response.ok(ctx, result);
   }
 
   static async post(ctx) {
-    console.log(ctx.request.body);
     const inputRoute = ctx.request.body;
-    const actualResult = await RoutesManager.createNewRequest({
+    const result = await RoutesManager.createNewRequest({
       services: ctx.app.context.services,
       inputRoute
     });
+
+    RoutesManager.findAndPersist({ // Promise
+      services: ctx.app.context.services,
+      routeId: result._id
+    });
     return Response.ok(ctx, {
-      token: actualResult.token
+      token: result.token
     });
   }
 }
