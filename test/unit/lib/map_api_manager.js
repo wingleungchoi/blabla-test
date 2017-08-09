@@ -139,8 +139,8 @@ describe('Testing MapApiManager Service', () => {
           'Laguna City, Central, Hong Kong',
           '789 Nathan Rd, Mong Kok, Hong Kong'
         ],
-        total_distance: 25185,
-        total_time: 1819
+        totalDistance: 25185,
+        totalTime: 1819
       };
       const actualResult = MapApiManager.convertData(googleResponse);
       expect(actualResult).to.deep.equal(expectedResult);
@@ -161,13 +161,13 @@ describe('Testing MapApiManager Service', () => {
           ['22.326442', '114.167811'],
           ['22.284419', '114.159510']
         ],
-        total_distance: 25185,
-        total_time: 1819
+        totalDistance: 25185,
+        totalTime: 1819
       };
       expect(actualResult.status).to.equal(expectedResult.status);
       expect(actualResult.path).to.deep.equal(expectedResult.path);
-      expect(actualResult.total_distance).to.equal(expectedResult.total_distance);
-      expect(actualResult.total_time).to.be.a('number');
+      expect(actualResult.totalDistance).to.equal(expectedResult.totalDistance);
+      expect(actualResult.totalTime).to.be.a('number');
     });
 
     it('returns null when no routes are found', async () => {

@@ -67,8 +67,8 @@ describe('Testing RoutesManager Service', () => {
       const updatedResult = await RoutesManager.findAndPersist({ services, routeId: confirmInsertresult._id });
       expect(updatedResult.status).to.be.eql(ROUTE_STATUS.success.value);
       expect(updatedResult.path).to.be.a('array');
-      expect(updatedResult.total_distance).to.be.a('number');
-      expect(updatedResult.total_time).to.be.a('number');
+      expect(updatedResult.totalDistance).to.be.a('number');
+      expect(updatedResult.totalTime).to.be.a('number');
     });
   });
 });
